@@ -43,7 +43,7 @@ const Login = async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        user.refreshToken = refreshToken;
+        user.refreshTokens.push(refreshToken);
         await user.save();
 
         res.cookie('refreshToken', refreshToken, {

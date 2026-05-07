@@ -24,9 +24,9 @@ const userSchema = new moongoose.Schema({
         type : Boolean,
         default : false
     },
-    refreshToken : {
-        type : String
-    }
+    refreshTokens: [String],
+    resetToken: String,
+    resetTokenExpiry: Date
 }, {
     timestamps : true
 })

@@ -20,6 +20,8 @@ const userSchema = new moongoose.Schema({
         enum : ['user', 'admin'],
         default : 'user'
     },
+    verificationToken : String,
+    verificationTokenExpiry : Date,
     isVerified : {
         type : Boolean,
         default : false

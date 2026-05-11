@@ -1,14 +1,12 @@
 const User = require('../models/User');
+const asyncHandler = require('../middleware/asynHandler');
+const AppError = require('../utils/AppError');
 
-const logout = async (req, res) => {
-    try {
-
+const logout = asyncHandler(async (req, res) => {
         const refreshToken = req.cookies.refreshToken;
 
         if (!refreshToken) {
-            return res.status(200).json({
-                message: "Already logged out"
-            });
+            throw new AppError("Refresh token is required", 400);
         }
 
         const user = await User.findOne({ refreshToken });
@@ -27,15 +25,6 @@ const logout = async (req, res) => {
         return res.status(200).json({
             message: "Logged out successfully"
         });
-
-    } catch (error) {
-
-        console.error("Logout Error:", error);
-
-        return res.status(500).json({
-            message: "Internal server error"
-        });
-    }
-};
+});
 
 module.exports = logout;

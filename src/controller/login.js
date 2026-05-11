@@ -1,23 +1,20 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const asyncHandler = require('../middleware/asynHandler');
+const AppError = require('../utils/AppError');
 
-const Login = async (req, res) => {
-    try {
+const Login = asyncHandler(async (req, res) => {
         const { email, password } = req.body;
 
         if (!email || !password) {
-            return res.status(400).json({
-                message: "All fields are required"
-            });
+            throw new AppError("Email and password are required", 400);
         }
 
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(400).json({
-                message: "Invalid credentials"
-            });
+            throw new AppError("Invalid credentials", 400);
         }
 
         const isMatch = await bcrypt.compare(
@@ -26,9 +23,7 @@ const Login = async (req, res) => {
         );
 
         if (!isMatch) {
-            return res.status(400).json({
-                message: "Invalid credentials"
-            });
+            throw new AppError("Invalid credentials", 400);
         }
 
         const accessToken = jwt.sign(
@@ -57,14 +52,6 @@ const Login = async (req, res) => {
             message: "Login successful",
             accessToken
         });
-
-    } catch (error) {
-        console.error("Login error:", error);
-
-        return res.status(500).json({
-            message: "Server error"
-        });
-    }
-};
+});
 
 module.exports = Login;

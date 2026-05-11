@@ -1,14 +1,13 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const asyncHandler = require('../middleware/asynHandler');
+const AppError = require('../utils/AppError');
 
-const protect = async (req, res, next) => {
-    try {
+const protect = asyncHandler(async (req, res, next) => {
         const token = req.headers.authorization?.split(" ")[1];
 
         if (!token) {
-            return res.status(401).json({
-                message: "Not authorized, no token"
-            });
+            throw new AppError("Not authorized, no token", 401);
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -16,11 +15,6 @@ const protect = async (req, res, next) => {
 
         req.user = user;
         next();
-    } catch (error) {
-        return res.status(401).json({
-            message: "Not authorized, token failed"
-        });
-    }
-}
+})
 
 module.exports = protect;

@@ -1,20 +1,20 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user'); 
+const asyncHandler = require('../middleware/asynHandler');
+const AppError = require('../utils/AppError');
 
-
-const refreshToken = async (req, res) => {
-    try {
-        const refreshToken = req.cookies.refreshToken;
+const refreshToken = asyncHandler(async (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
 
         if (!refreshToken) {
-            return res.status(401).json({ message: "No refresh token provided" });
+            throw new AppError("No refresh token provided", 401);
         }
 
         const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId);
 
         if (!user || !user.refreshTokens.includes(refreshToken)) {
-            return res.status(401).json({ message: "Invalid refresh token" });
+            throw new AppError("Invalid refresh token", 401);
         }
 
         const newRefreshToken = jwt.sign(
@@ -42,9 +42,6 @@ const refreshToken = async (req, res) => {
             message: "Token refreshed successfully",
             accessToken
         });
-    } catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+})
 
 module.exports = refreshToken;

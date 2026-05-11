@@ -4,15 +4,17 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const sendEmail = require('../utils/email');
 
-const resetPassword = async (req, res) => {
-    try {
-        const hashedToken = crypto.createHash('sha256').update(req.query.token).digest('hex');
-        const user = await User.findOne({
+const asyncHandler = require('../middleware/asynHandler');
+const AppError = require('../utils/AppError');
+
+const resetPassword = asyncHandler(async (req, res) => {
+    const hashedToken = crypto.createHash('sha256').update(req.query.token).digest('hex');
+    const user = await User.findOne({
             resetToken: hashedToken,
             resetTokenExpiry: { $gt: Date.now() }
         });
         if (!user) {
-            return res.status(400).json({ message: "Invalid or expired token" });
+            throw new AppError("Invalid or expired token", 400);
         }
 
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -26,10 +28,6 @@ const resetPassword = async (req, res) => {
             text: "Your password has been reset successfully. If you did not perform this action, please contact support immediately.",
         });
         return res.status(200).json({ message: "Password reset successful" });
-    } catch (error) {
-        console.error("Error resetting password:", error);
-        return res.status(500).json({ message: "Internal server error" });
-    }
-}
+})
 
 module.exports = resetPassword;

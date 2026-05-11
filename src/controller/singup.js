@@ -1,12 +1,15 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const asyncHandler = require('../middleware/asynHandler');
+const AppError = require('../utils/AppError');
+const sendEmail = require('../utils/sendEmail');
+const crypto = require("crypto");
 
-const signUp = async (req , res) => {
-    try {
-        const { name, email, password } = req.body;
+const signUp = asyncHandler(async (req , res) => {
+    const { name, email, password } = req.body;
 
-        if(!name || !email || !password) {
-            return res.status(400).json({ message : "All fields are required" });
+    if(!name || !email || !password) {
+        throw new AppError("All fields are required", 400);
         }
 
         const existingUser = await User.findOne({
@@ -14,7 +17,7 @@ const signUp = async (req , res) => {
         })
 
         if (existingUser) {
-            return res.status(400).json({ message : "User already exists" });
+            throw new AppError("User already exists", 400);
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,14 +27,20 @@ const signUp = async (req , res) => {
             email,
             password : hashedPassword
         })
-
+        const verificationToken = crypto.randomBytes(32).toString("hex");
+        const hashedVerificationToken = crypto.createHash("sha256").update(verificationToken).digest("hex");
+        user.verificationToken = hashedVerificationToken;
+        user.verificationTokenExpiry = Date.now() + 24 * 60 * 60 * 1000;
         await user.save();
 
+        const verificationEmail = `${process.env.BASE_URL}/verify-email?token=${verificationToken}`;
+        await sendEmail({
+            to: user.email,
+            subject: "Welcome to Our App!",
+            text: `Hi ${user.name},\n\nThank you for signing up! Please verify your email by clicking the following link: ${verificationEmail}\n\nBest regards,\nThe Team`,
+        });
+
         res.status(201).json({ message : "User created successfully" });
-    } catch (error) {
-        console.error("Signup error: ", error);
-        res.status(500).json({ message : "Server error" });
-    }
-}
+})
 
 module.exports = signUp;

@@ -35,3 +35,5 @@ const verifyEmail = asyncHandler(async (req, res) => {
             message: "Email verified successfully"
         });
 })
+
+module.exports = verifyEmail;

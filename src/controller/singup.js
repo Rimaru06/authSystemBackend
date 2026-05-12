@@ -33,14 +33,14 @@ const signUp = asyncHandler(async (req , res) => {
         user.verificationTokenExpiry = Date.now() + 24 * 60 * 60 * 1000;
         await user.save();
 
-        const verificationEmail = `${process.env.BASE_URL}/verify-email?token=${verificationToken}`;
+        const verificationEmail = `${process.env.BASE_URL}/api/auth/verify-email?token=${verificationToken}`;
         await sendEmail({
             to: user.email,
             subject: "Welcome to Our App!",
             text: `Hi ${user.name},\n\nThank you for signing up! Please verify your email by clicking the following link: ${verificationEmail}\n\nBest regards,\nThe Team`,
         });
 
-        res.status(201).json({ message : "User created successfully" });
+        res.status(201).json({ message: "we have sent a verification email, Please check your inbox" });
 })
 
 module.exports = signUp;

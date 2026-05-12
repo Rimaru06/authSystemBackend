@@ -17,6 +17,10 @@ const Login = asyncHandler(async (req, res) => {
             throw new AppError("Invalid credentials", 400);
         }
 
+        if (!user.isVerified) {
+            throw new AppError("Please verify your email before logging in", 400);
+        }
+
         const isMatch = await bcrypt.compare(
             password,
             user.password

@@ -5,11 +5,12 @@ const protect = require('../middleware/authMiddleware');
 const refreshToken = require('../controller/refreshToken');
 const validate = require('../middleware/validate');
 const logout = require('../controller/logout');
+const { registerValidation, loginValidation } = require('../validations/authValidation');
 
 const router = express.Router();
 
-router.post('/signup', validate(authValidation.registerValidation) , signUp);
-router.post('/login', validate(authValidation.loginValidation), Login);
+router.post('/signup', validate(registerValidation) , signUp);
+router.post('/login', validate(loginValidation), Login);
 router.get('/me', protect, (req, res) => {
     res.status(200).json({
         message: "User profile",

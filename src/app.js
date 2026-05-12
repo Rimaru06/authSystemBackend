@@ -10,8 +10,6 @@ const authRoutes = require('./routes/authRoutes');
 const errorMiddleware = require('./middleware/errorMiddleware');
 const AppError = require('./utils/AppError');
 const {rateLimit} = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require("xss-clean");
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -24,8 +22,6 @@ const limiter = rateLimit({
 
 const app = express();
 
-app.use(xss());
-app.use(mongoSanitize());
 app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
@@ -43,7 +39,7 @@ app.use('/api/auth', authRoutes);
 app.get('/', (req, res) => {
     res.status(200).json({ message : "Welcome to the auth API" });
 })
-app.all('*', (req, res, next) => {
+app.use((req, res, next) => {
 
     next(
         new AppError(

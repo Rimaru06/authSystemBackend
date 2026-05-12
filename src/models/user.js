@@ -26,11 +26,12 @@ const userSchema = new moongoose.Schema({
         type : Boolean,
         default : false
     },
-    refreshTokens: [String],
+    refreshTokens: [{type: String}],
     resetToken: String,
     resetTokenExpiry: Date
 }, {
     timestamps : true
 })
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.models.User ||
+mongoose.model('User', userSchema)

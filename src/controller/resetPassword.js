@@ -1,8 +1,8 @@
 const crypto = require('crypto');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
-const sendEmail = require('../utils/email');
+const sendEmail = require('../utils/sendEmail');
 
 const asyncHandler = require('../middleware/asynHandler');
 const AppError = require('../utils/AppError');

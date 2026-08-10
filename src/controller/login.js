@@ -12,11 +12,9 @@ const Login = asyncHandler(async (req, res) => {
         }
 
         const user = await User.findOne({ email });
-
         if (!user) {
             throw new AppError("Invalid credentials", 400);
         }
-
         if (!user.isVerified) {
             throw new AppError("Please verify your email before logging in", 400);
         }

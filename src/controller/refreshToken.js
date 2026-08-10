@@ -17,6 +17,7 @@ const refreshToken = asyncHandler(async (req, res) => {
             throw new AppError("Invalid refresh token", 401);
         }
 
+        user.refreshTokens = user.refreshTokens.filter(token => token !== refreshToken);
         const newRefreshToken = jwt.sign(
             { userId: user._id },
             process.env.JWT_SECRET,

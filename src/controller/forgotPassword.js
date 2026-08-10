@@ -20,7 +20,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         user.resetToken = hashedToken;
         user.resetTokenExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
         await user.save();
-        const resetUrl = `${process.env.BASE_URL}/api/auth/reset-password?token=${resetToken}`;
+        const resetUrl = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`;
 
         await sendEmail({
             to: user.email,

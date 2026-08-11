@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authSystem-backend
+  name: authsystem-backend
   namespace: auth-system
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: authSystem-backend
+      app: authsystem-backend
   template:
     metadata:
       labels:
-        app: authSystem-backend
+        app: authsystem-backend
     spec:
       containers:
-        - name: authSystem-backend
-          image: authsystem-backend:v1.0.0
+        - name: authsystem-backend
+          image: authsystem-backend:v1.0.1
           ports:
             - containerPort: 5000
           envFrom:

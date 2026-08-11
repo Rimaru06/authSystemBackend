@@ -1,8 +1,8 @@
 const crypto = require('crypto');
-const User = require('../models/user');
-const sendEmail = require('../utils/sendEmail');
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
+const User = require('../models/user.js');
+const sendEmail = require('../utils/sendEmail.js');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
 
 const forgotPassword = asyncHandler(async (req, res) => {
         const email = req.body.email;

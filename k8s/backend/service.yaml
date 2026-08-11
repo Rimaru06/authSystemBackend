@@ -5,7 +5,7 @@ metadata:
   namespace: auth-system
 spec:
   selector:
-    app: authSystem-backend
+    app: authsystem-backend
   ports:
     - port : 80
       targetPort: 5000

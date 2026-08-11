@@ -1,10 +1,10 @@
-const User = require('../models/User');
+const User = require('../models/user.js');
 
 const asyncHandler =
-require('../middleware/asynHandler');
+require('../middleware/asynHandler.js');
 
 const AppError =
-require('../utils/AppError');
+require('../utils/AppError.js');
 
 const logout = asyncHandler(async (req, res) => {
 

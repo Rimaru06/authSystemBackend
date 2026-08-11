@@ -1,10 +1,10 @@
 const express = require('express');
-const refreshToken = require('../controller/refreshToken');
-const { forgotPasswordValidation } = require('../validations/authValidation');
-const validate = require('../middleware/validate');
-const forgotPassword = require('../controller/forgotPassword');
-const resetPassword = require('../controller/resetPassword');
-const verifyEmail = require('../controller/verifyEmail');
+const refreshToken = require('../controller/refreshToken.js');
+const { forgotPasswordValidation } = require('../validations/authValidation.js');
+const validate = require('../middleware/validate.js');
+const forgotPassword = require('../controller/forgotPassword.js');
+const resetPassword = require('../controller/resetPassword.js');
+const verifyEmail = require('../controller/verifyEmail.js');
 
 const router = express.Router();
 

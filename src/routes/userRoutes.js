@@ -1,11 +1,11 @@
 const express = require('express');
-const signUp = require('../controller/singup');
-const Login = require('../controller/login');
-const protect = require('../middleware/authMiddleware');
-const refreshToken = require('../controller/refreshToken');
-const validate = require('../middleware/validate');
-const logout = require('../controller/logout');
-const { registerValidation, loginValidation } = require('../validations/authValidation');
+const signUp = require('../controller/singup.js');
+const Login = require('../controller/login.js');
+const protect = require('../middleware/authMiddleware.js');
+const refreshToken = require('../controller/refreshToken.js');
+const validate = require('../middleware/validate.js');
+const logout = require('../controller/logout.js');
+const { registerValidation, loginValidation } = require('../validations/authValidation.js');
 
 const router = express.Router();
 

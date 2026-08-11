@@ -1,4 +1,4 @@
-const { stack } = require("../routes/userRoutes");
+const { stack } = require("../routes/userRoutes.js");
 
 const errorMiddleware = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;

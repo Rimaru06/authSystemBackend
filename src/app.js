@@ -1,15 +1,15 @@
 require('dotenv').config();
 const express = require('express');
-const connectDB  = require('./config/db');
+const connectDB  = require('./config/db.js');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
-const errorMiddleware = require('./middleware/errorMiddleware');
-const AppError = require('./utils/AppError');
-const {rateLimit} = require('express-rate-limit');
+const userRoutes = require('./routes/userRoutes.js');
+const authRoutes = require('./routes/authRoutes.js');
+const errorMiddleware = require('./middleware/errorMiddleware.js');
+const AppError = require('./utils/AppError.js');
+const { rateLimit } = require('express-rate-limit');
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes

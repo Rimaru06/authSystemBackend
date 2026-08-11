@@ -1,8 +1,8 @@
-const User = require('../models/user');
+const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
-const sendEmail = require('../utils/sendEmail');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
+const sendEmail = require('../utils/sendEmail.js');
 const crypto = require("crypto");
 
 const signUp = asyncHandler(async (req , res) => {

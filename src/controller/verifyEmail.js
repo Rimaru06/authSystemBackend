@@ -1,6 +1,6 @@
-const User = require('../models/user');
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
+const User = require('../models/user.js');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
 const crypto = require('crypto');
 
 const verifyEmail = asyncHandler(async (req, res) => {

@@ -1,11 +1,11 @@
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/user');
-const sendEmail = require('../utils/sendEmail');
+const User = require('../models/user.js');
+const sendEmail = require('../utils/sendEmail.js');
 
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
 
 const resetPassword = asyncHandler(async (req, res) => {
     const hashedToken = crypto.createHash('sha256').update(req.query.token).digest('hex');

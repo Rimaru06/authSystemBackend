@@ -1,8 +1,8 @@
-const User = require('../models/user');
+const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
 
 const Login = asyncHandler(async (req, res) => {
         const { email, password } = req.body;

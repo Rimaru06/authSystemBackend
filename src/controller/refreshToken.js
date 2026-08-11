@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user'); 
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
+const User = require('../models/user.js');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
 
 const refreshToken = asyncHandler(async (req, res) => {
     const refreshToken = req.cookies.refreshToken;

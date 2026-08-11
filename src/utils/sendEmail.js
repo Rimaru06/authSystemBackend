@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
-const asyncHandler = require('../middleware/asynHandler');
-const AppError = require('../utils/AppError');
+const asyncHandler = require('../middleware/asynHandler.js');
+const AppError = require('../utils/AppError.js');
 const sendEmail = asyncHandler(async (options) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',

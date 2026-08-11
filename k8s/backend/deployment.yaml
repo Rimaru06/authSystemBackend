@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authSystem-backend
+  namespace: auth-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: authSystem-backend
+  template:
+    metadata:
+      labels:
+        app: authSystem-backend
+    spec:
+      containers:
+        - name: authSystem-backend
+          image: authsystem-backend:v1.0.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongo-service:27017/authsystem"
+            - name: PORT
+              value: "5000"
+            - name: JWT_SECRET
+              value: "your_jwt_secret"
+            - name: JWT_REFRESH_SECRET
+              value: "your_jwt_refresh_secret"
+            - name: CLIENT_URL
+              value: "http://localhost:3000"
+            - name: BASE_URL
+              value: "http://localhost:5000"
+            - name: EMAIL_USER
+              value: "shivraodanger04@gmail.com"
+            - name: EMAIL_PASS
+              value: "your_email_password"
